@@ -1,5 +1,7 @@
 package com.ram.samstrack.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,17 +14,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="branch")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Branch {
+public class Branch implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="branch_id",nullable = false)
 	private int branch_Id;
 	
-	@Column(name = "branch_name", nullable = false,length = 100)
+	@Column(name = "branch_name", nullable = false,length = 100,unique = true)
 	private String branch_Name;
 	
-	@Column(name = "branch_code",nullable = false,length = 10)
+	@Column(name = "branch_code",nullable = false,length = 10,unique = true)
 	private Long branch_Code;	
 
 	
@@ -58,6 +60,12 @@ public class Branch {
 
 	public void setBranch_Code(Long branch_Code) {
 		this.branch_Code = branch_Code;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Branch [branch_Id=" + branch_Id + ", branch_Name=" + branch_Name + ", branch_Code=" + branch_Code + "]";
 	}
 	
 	

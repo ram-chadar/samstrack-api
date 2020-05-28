@@ -1,6 +1,7 @@
-package com.ram.samstrack.dao;
+package com.ram.samstrack.dao.branch;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,28 @@ public class Branch_DaoImpl implements Branch_Dao {
 
 	@Override
 	public Serializable addBranch(Branch branch) {
-		Serializable id=null;
+		Serializable id = null;
 		try {
-		id = sf.getCurrentSession().save(branch);
+			id = sf.getCurrentSession().save(branch);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return id;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Branch> getAllBranch() {
+		List<Branch> branchList = null;
+		try {
+			branchList=sf.getCurrentSession()
+					.createCriteria(Branch.class)
+					.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return branchList;
 	}
 
 }
