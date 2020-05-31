@@ -10,7 +10,8 @@ public interface Subject_Service {
 	public Serializable add_Subject(Subject subject);
 	
 	public List<Subject> gel_All_Branch_Subject(int branch_Id); 
-	public Subject getAll_Branch_Sem_Subject(int branch_Id,int sem);
+	public List<Subject> getAll_Branch_Sem_Subject(int branch_Id,int sem);
+	
 	
 	
 }

@@ -1,7 +1,6 @@
 package com.ram.samstrack.model;
 
 import java.io.Serializable;
-import java.time.Year;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +18,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Student implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="student_id",nullable = false)
@@ -51,10 +55,10 @@ public class Student implements Serializable {
 	private String gender;
 	
 	
-	@Column(name = "mail" ,nullable = false)
+	@Column(name = "mail" ,nullable = false ,unique = true)
 	private String mail;
 	
-	@Column(name = "student_phone" )
+	@Column(name = "student_phone" ,unique = true )
 	private String student_Phone;
 	
 	@Column(name = "address")
@@ -66,7 +70,7 @@ public class Student implements Serializable {
 	@Column(name = "mother_name")
 	private String mother_Name;
 	
-	@Column(name = "parent_phone")
+	@Column(name = "parent_phone",unique = true)
 	private String parent_Phone;
 	
 public Student() {

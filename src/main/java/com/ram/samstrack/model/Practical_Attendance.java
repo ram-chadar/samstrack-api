@@ -1,8 +1,7 @@
 package com.ram.samstrack.model;
 
 import java.io.Serializable;
-import java.time.Month;
-import java.time.Year;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,18 +10,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name="theory_attendance")
+@Table(name="practical_attendance")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Treory_Attendance implements Serializable{
+public class Practical_Attendance implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="tat_id",nullable = false)
+	@Column(name="pa_id",nullable = false)
 	private int ta_Id;
 	
 	@Column(name = "date_time",nullable = false)
@@ -34,6 +37,9 @@ public class Treory_Attendance implements Serializable{
 	
 	@Column(name = "division",nullable = false)
 	private char division;
+	
+	@Column(name = "batch",nullable = false)
+	private char batch;
 	
 	@Column(name = "sem",nullable = false)
 	private int sem;
@@ -54,7 +60,7 @@ public class Treory_Attendance implements Serializable{
 	@Column(name = "acc_year",nullable = false)
 	private int acc_Year;
 	
-	public Treory_Attendance() {
+	public Practical_Attendance() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -88,6 +94,16 @@ public class Treory_Attendance implements Serializable{
 
 	public void setDivision(char division) {
 		this.division = division;
+	}
+
+	
+	
+	public char getBatch() {
+		return batch;
+	}
+
+	public void setBatch(char batch) {
+		this.batch = batch;
 	}
 
 	public int getSem() {
@@ -132,10 +148,12 @@ public class Treory_Attendance implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Treory_Attendance [ta_Id=" + ta_Id + ", date_Time=" + date_Time + ", branch=" + branch + ", division="
-				+ division + ", sem=" + sem + ", subject=" + subject + ", student=" + student + ", month=" + month
-				+ ", acc_Year=" + acc_Year + "]";
+		return "Practical_Attendance [ta_Id=" + ta_Id + ", date_Time=" + date_Time + ", branch=" + branch
+				+ ", division=" + division + ", batch=" + batch + ", sem=" + sem + ", subject=" + subject + ", student="
+				+ student + ", month=" + month + ", acc_Year=" + acc_Year + "]";
 	}
+
+	
 	
 	
 
