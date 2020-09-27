@@ -3,6 +3,8 @@ package com.ram.samstrack.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ram.samstrack.exception.User_Not_Found_Exception;
 import com.ram.samstrack.model.User;
 import com.ram.samstrack.service.user.User_Service;
 
@@ -52,7 +53,18 @@ public class User_Controller {
 	public ResponseEntity<List<User>> getAllUser() {
 		List<User> userList = user_Service.getAllUser();
 		if (userList.isEmpty()) {
-			throw new User_Not_Found_Exception();
+			return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+			
+		} else {
+			return new ResponseEntity<List<User>>(userList, HttpStatus.FOUND);
+		}
+	}
+	
+	@GetMapping(value = "/get-branch-user", headers = "Accept=application/json")
+	public ResponseEntity<List<User>> getBranchUser( HttpSession httpSession) {
+		List<User> userList = user_Service.getBranchUser(httpSession);
+		if (userList.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			
 		} else {
 			return new ResponseEntity<List<User>>(userList, HttpStatus.FOUND);

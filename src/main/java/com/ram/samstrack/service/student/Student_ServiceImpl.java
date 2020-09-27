@@ -46,4 +46,9 @@ public class Student_ServiceImpl  implements Student_Service{
 		return student_Dao.generate_Batch(batch);
 	}
 
+	@Override
+	public void update_Student(Student student) {
+		 student_Dao.update_Student(student);
+	}
+
 }

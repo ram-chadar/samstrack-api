@@ -8,4 +8,7 @@ public interface Auth_Service {
 
 	public User login(User user);
 	public void logout(HttpSession session);
+	
+	public int forgot_Password(User user);
+
 }

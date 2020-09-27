@@ -122,13 +122,17 @@ public class Student_DaoImpl implements Student_Dao {
 				index++;
 			}
 
-			
-			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return index;
+	}
+
+	@Override
+	public void update_Student(Student student) {
+		sf.getCurrentSession()
+		.update(student);
+		
 	}
 
 }

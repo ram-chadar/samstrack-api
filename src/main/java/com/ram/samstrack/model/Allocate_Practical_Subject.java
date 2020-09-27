@@ -7,7 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -17,9 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class Allocate_Practical_Subject {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="ats_id",nullable = false)
-	private int ats_Id;
+	@GeneratedValue(strategy=GenerationType.TABLE,generator = "aps_id")
+	@TableGenerator(name = "aps_id")
+	@Column(name="aps_id",nullable = false)
+	private int aps_Id;
 	
 	@ManyToOne(targetEntity = Branch.class)
 	@JoinColumn(name = "branch_id",nullable = false)
@@ -46,13 +49,16 @@ public class Allocate_Practical_Subject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getAts_Id() {
-		return ats_Id;
+	
+	public int getAps_Id() {
+		return aps_Id;
 	}
 
-	public void setAts_Id(int ats_Id) {
-		this.ats_Id = ats_Id;
+
+	public void setAps_Id(int aps_Id) {
+		this.aps_Id = aps_Id;
 	}
+
 
 	public Branch getBranch() {
 		return branch;
@@ -106,7 +112,7 @@ public class Allocate_Practical_Subject {
 
 	@Override
 	public String toString() {
-		return "Allocated_Practical_Subject [ats_Id=" + ats_Id + ", branch=" + branch + ", division=" + division
+		return "Allocated_Practical_Subject [ats_Id=" + aps_Id + ", branch=" + branch + ", division=" + division
 				+ ", sem=" + sem + ", batch=" + batch + ", subject=" + subject + ", user=" + user + "]";
 	}
 

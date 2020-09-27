@@ -15,5 +15,6 @@ public interface Student_Dao {
 	public List<Student> get_Students_For_Practical(int acc_Year,String year,int branch_Id,char division,String batch);
 
 	public int generate_Batch(Batch batch);
+	public void update_Student (Student student);
 
 }

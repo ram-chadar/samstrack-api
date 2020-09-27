@@ -10,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -24,9 +27,10 @@ public class Practical_Attendance implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.TABLE,generator = "pa_id")
+	@TableGenerator(name = "pa_id")
 	@Column(name="pa_id",nullable = false)
-	private int ta_Id;
+	private int pa_Id;
 	
 	@Column(name = "date_time",nullable = false)
 	private String date_Time;
@@ -64,13 +68,19 @@ public class Practical_Attendance implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getTa_Id() {
-		return ta_Id;
+	
+
+	public int getPa_Id() {
+		return pa_Id;
 	}
 
-	public void setTa_Id(int ta_Id) {
-		this.ta_Id = ta_Id;
+
+
+	public void setPa_Id(int pa_Id) {
+		this.pa_Id = pa_Id;
 	}
+
+
 
 	public String getDate_Time() {
 		return date_Time;
@@ -148,7 +158,7 @@ public class Practical_Attendance implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Practical_Attendance [ta_Id=" + ta_Id + ", date_Time=" + date_Time + ", branch=" + branch
+		return "Practical_Attendance [ta_Id=" + pa_Id + ", date_Time=" + date_Time + ", branch=" + branch
 				+ ", division=" + division + ", batch=" + batch + ", sem=" + sem + ", subject=" + subject + ", student="
 				+ student + ", month=" + month + ", acc_Year=" + acc_Year + "]";
 	}

@@ -9,7 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -24,9 +26,10 @@ public class Practical_Sem_Status implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "pms_id", nullable = false)
-	private int pms_Id;
+	@GeneratedValue(strategy=GenerationType.TABLE,generator = "pss_id")
+	@TableGenerator(name = "pss_id")
+	@Column(name = "pss_id", nullable = false)
+	private int pss_Id;
 
 	@ManyToOne(targetEntity = Student.class)
 	@JoinColumn(name = "student_id", nullable = false)
@@ -62,13 +65,16 @@ public class Practical_Sem_Status implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getPms_Id() {
-		return pms_Id;
+	
+	public int getPss_Id() {
+		return pss_Id;
 	}
 
-	public void setPms_Id(int pms_Id) {
-		this.pms_Id = pms_Id;
+
+	public void setPss_Id(int pss_Id) {
+		this.pss_Id = pss_Id;
 	}
+
 
 	public Student getStudent() {
 		return student;
@@ -144,7 +150,7 @@ public class Practical_Sem_Status implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Practical_Month_Status [pms_Id=" + pms_Id + ", student=" + student + ", branch=" + branch
+		return "Practical_Month_Status [pms_Id=" + pss_Id + ", student=" + student + ", branch=" + branch
 				+ ", division=" + division + ", sem=" + sem + ", subject=" + subject + ", status=" + status
 				+ ", acc_Year=" + acc_Year + ", days=" + days + ", batch=" + batch + "]";
 	}

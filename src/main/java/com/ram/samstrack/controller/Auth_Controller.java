@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +26,9 @@ public class Auth_Controller {
 	@Autowired
 	private Auth_Service auth_Service;
 	
-	@PostMapping(value = "/auth",headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> authenticate(@RequestBody User user,HttpSession httpSession){
+	//@PostMapping(value = "/auth",headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/auth")
+	public ResponseEntity<Integer> authenticate(@RequestBody User user,HttpSession httpSession){
 		
 		System.out.println(user.getUsername()+"\t"+user.getPassword());
 		User usr=auth_Service.login(user);
@@ -36,11 +38,12 @@ public class Auth_Controller {
 			httpSession.setAttribute("userid", usr.getUser_Id());
 			httpSession.setAttribute("usertype", usr.getUser_Type());
 			httpSession.setAttribute("branch", usr.getBranch());
-			return new ResponseEntity<Boolean>(true,HttpStatus.FOUND);
+			System.out.println("Successfully LogedIn");
+			return new ResponseEntity<Integer>(usr.getUser_Id(),HttpStatus.FOUND);
 		}
 		else
 		{
-			return new ResponseEntity<Boolean>(false,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Integer>(0,HttpStatus.NOT_FOUND);
 
 		}
 		
@@ -56,6 +59,27 @@ public class Auth_Controller {
 			httpSession.invalidate();
 		}
 		return new ResponseEntity<String>("Logout Successfully",HttpStatus.OK);
+		
+	}
+	
+	@PutMapping (value = "/forgot-password",headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> forgot_Password(@RequestBody User user){
+		
+		int result=auth_Service.forgot_Password(user);
+		System.out.println(result+"***************");
+		if(result==0)
+		{
+			return new ResponseEntity<Integer>(result,HttpStatus.NOT_FOUND);
+		}
+		else if(result==1 || result==2)
+		{
+			return new ResponseEntity<Integer>(result,HttpStatus.FORBIDDEN);
+		}
+		
+		else {
+			return new ResponseEntity<Integer>(result,HttpStatus.OK);
+
+		}
 		
 	}
 

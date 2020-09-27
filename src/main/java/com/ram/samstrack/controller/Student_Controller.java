@@ -92,10 +92,16 @@ public class Student_Controller {
 		}
 		else
 		{
-			return new ResponseEntity<Integer>(HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<Integer>(0,HttpStatus.NOT_MODIFIED);
 		}
 		
 	}
 	
+	@PutMapping(value = "update-student", headers = "Accept=application/json",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> update_Student(@RequestBody Student student)
+	{
+		student_Service.update_Student(student);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }

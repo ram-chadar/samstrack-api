@@ -27,4 +27,9 @@ public class Auth_ServiceImpl implements Auth_Service{
 		
 	}
 
+	@Override
+	public int forgot_Password(User user) {
+		return auth_Dao.forgot_Password(user);
+	}
+
 }

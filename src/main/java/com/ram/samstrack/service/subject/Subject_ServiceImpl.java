@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ram.samstrack.dao.subject.Subject_Dao;
+import com.ram.samstrack.model.Allocate_Theory_Subject;
 import com.ram.samstrack.model.Subject;
 
 @Service
@@ -23,14 +24,22 @@ public class Subject_ServiceImpl implements Subject_Service {
 	}
 
 	@Override
-	public List<Subject> gel_All_Branch_Subject(int branch_Id) {
-		return subject_Dao.gel_All_Branch_Subject(branch_Id);
+	public List<Subject> get_Branch_Subject(int branch_Id) {
+		return subject_Dao.get_Branch_Subject(branch_Id);
 	}
 
 	@Override
-	public List<Subject> getAll_Branch_Sem_Subject(int branch_Id, int sem) {
+	public List<Subject> get_Branch_Sem_Subject(int branch_Id, int sem) {
 		// TODO Auto-generated method stub
-		return subject_Dao.get_All_Branch_Sem_Subject(branch_Id, sem);
+		return subject_Dao.get_Branch_Sem_Subject(branch_Id, sem);
 	}
+
+	
+
+	@Override
+	public List<Subject> get_Theory_Practical_Subject(int branch_Id, int sem,String subject_Type) {
+		return subject_Dao.get_Theory_Practical_Subject(branch_Id, sem,subject_Type);
+	}
+
 
 }
