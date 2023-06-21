@@ -19,7 +19,6 @@ public class SamsTrackApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SamsTrackApiApplication.class, args);
 	}
-	xyz
 	
 
 	/*
