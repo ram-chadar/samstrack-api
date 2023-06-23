@@ -14,8 +14,18 @@ pipeline {
 
                 
                 // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                // bat "mvn -Dmaven.test.failure.ignore=true clean"
             }
+
+        }
+
+        stage('Test') {
+            steps {
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true test"
+            }
+
+        }
 
             post {
                 // If Maven was able to run the tests, even if some of the test
