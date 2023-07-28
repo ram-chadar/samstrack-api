@@ -20,7 +20,7 @@ public class SamsTrackApiApplication {
 		SpringApplication.run(SamsTrackApiApplication.class, args);
 	}
 	
-sample
+
 	/*
 	 * @Bean public Docket productApi() { return new
 	 * Docket(DocumentationType.SWAGGER_2).select()
