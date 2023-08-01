@@ -18,7 +18,7 @@ public class SamsTrackApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SamsTrackApiApplication.class, args);
-		System.out.printl("started");
+		System.out.println("started");
 	}
 	
 
