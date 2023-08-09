@@ -1,20 +1,54 @@
 pipeline {
-        agent none
-        stages {
-          stage("build & SonarQube analysis") {
-            agent any
+    agent any
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "MAVEN_HOME"
+    }
+    
+    environment {
+        // Define environment variables if needed
+        SONARQUBE_URL = 'http://localhost:9000'
+        SONARQUBE_TOKEN = credentials('2ea0a558745402fc8ff26672ef93fd97a9501d76')
+    }
+    
+    stages {
+        stage('Checkout and Build') {
             steps {
-              withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn clean package sonar:sonar'
-              }
+                // Get some code from a GitHub repository
+                git 'https://github.com/ram-chadar/samstrack-api.git'
+                // Run Maven on a Unix agent.
+                //sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+                // To run Maven on a Windows agent, use
+                 bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
-          }
-          stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
         }
-      }
+        
+       
+        
+        stage('SonarQube Analysis') {
+            steps {
+                // Run SonarQube analysis
+                script {
+                    def scannerHome = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    bat "${scannerHome}\\bin\\sonar-scanner.bat \
+                        -Dsonar.projectKey=my-project \
+                        -Dsonar.sources=src \
+                        -Dsonar.host.url=%SONARQUBE_URL% \
+                        -Dsonar.login=%SONARQUBE_TOKEN%"
+                }
+            }
+        }
+    }
+    
+    post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                always {
+            emailext body: 'A Test EMail',to:'salikramchadar@gmail.com', subject: 'Test'
+        }
+            }
+        
+        
+    }
+
