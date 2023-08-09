@@ -31,7 +31,7 @@ pipeline {
                 // Run SonarQube analysis
                 script {
                     def scannerHome = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    bat "C:\setup\SonarQube\sonar-scanner-4.4.0.2170-windows\bin\sonar-scanner.bat \
+                    bat "C:\\setup\\SonarQube\\sonar-scanner-4.4.0.2170-windows\\bin\\sonar-scanner.bat \
                         -Dsonar.projectKey=my-project \
                         -Dsonar.sources=src \
                         -Dsonar.host.url=%SONARQUBE_URL% \
