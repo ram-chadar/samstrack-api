@@ -1,54 +1,31 @@
-pipeline {
+pipeline{
     agent any
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "MAVEN_HOME"
     }
     
-    environment {
-        // Define environment variables if needed
-        SONARQUBE_URL = 'http://localhost:9000'
-        SONARQUBE_TOKEN = credentials('2ea0a558745402fc8ff26672ef93fd97a9501d76')
-    }
-    
-    stages {
-        stage('Checkout and Build') {
-            steps {
-                // Get some code from a GitHub repository
+    stages{
+       stage('GetCode'){
+            steps{
                 git 'https://github.com/ram-chadar/samstrack-api.git'
-                // Run Maven on a Unix agent.
-                //sh "mvn -Dmaven.test.failure.ignore=true clean package"
-
-                // To run Maven on a Windows agent, use
-                 bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
+         }        
+       stage('Build'){
+            steps{
+               bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+         }
+        stage('SonarQube analysis') {
+//    def scannerHome = tool 'SonarScanner 4.0';
+        steps{
+        withSonarQubeEnv('MySonarQubeServer') { 
+        // If you have configured more than one global server connection, you can specify its name
+//      sh "${scannerHome}/bin/sonar-scanner"
+        bat "mvn sonar:sonar"
+    }
         }
-        
+        }
        
-        
-        stage('SonarQube Analysis') {
-            steps {
-                // Run SonarQube analysis
-                script {
-                    def scannerHome = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    bat "C:\\setup\\SonarQube\\sonar-scanner-4.4.0.2170-windows\\bin\\sonar-scanner.bat \
-                        -Dsonar.projectKey=my-project \
-                        -Dsonar.sources=src \
-                        -Dsonar.host.url=%SONARQUBE_URL% \
-                        -Dsonar.login=%SONARQUBE_TOKEN%"
-                }
-            }
-        }
     }
-    
-    post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                always {
-            emailext body: 'A Test EMail',to:'salikramchadar@gmail.com', subject: 'Test'
-        }
-            }
-        
-        
-    }
-
+}
